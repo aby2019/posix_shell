@@ -1,0 +1,23 @@
+a
+bash
+bash.c
+final.c
+history.txt
+ioredirection.h
+p.h
+pipe.h
+process.c
+test.c
+total 96
+-rwxr-xr-x 1 abhinav abhinav 17976 Sep  8 21:12 a
+-rwxrwxr-x 1 abhinav abhinav 26920 Sep  8 20:15 bash
+-rw-rw-r-- 1 abhinav abhinav  4436 Sep  8 18:39 bash.c
+-rw-r--r-- 1 abhinav abhinav    78 Sep  8 21:12 file.txt
+-rw-rw-r-- 1 abhinav abhinav  2530 Sep  8 21:09 final.c
+-rw-r--r-- 1 abhinav abhinav   446 Sep  8 21:12 history.txt
+-rw-rw-r-- 1 abhinav abhinav  3112 Sep  8 19:00 ioredirection.h
+-rw-rw-r-- 1 abhinav abhinav  7826 Sep  8 21:10 p.h
+-rw-rw-r-- 1 abhinav abhinav  5754 Sep  8 21:11 pipe.h
+-rw-rw-r-- 1 abhinav abhinav  2064 Sep  7 02:39 process.c
+-rw-rw-r-- 1 abhinav abhinav  1233 Sep  8 06:16 test.c
+     11      92     571
