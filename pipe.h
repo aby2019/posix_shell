@@ -110,8 +110,8 @@ int piping(char **args,int arg_count)
             dup2(pd[1], 1);
             close(pd[0]);
             execvp(str[0],str);
-            perror("exec");
-            abort();
+            perror("execution error");
+            _exit(EXIT_FAILURE);
             }
             wait(NULL);
             dup2(pd[0], 0);
@@ -119,8 +119,8 @@ int piping(char **args,int arg_count)
         }
     
             execvp(str1[0],str1);
-            perror("exec");
-             abort();
+            perror("execution error");
+            _exit(EXIT_FAILURE);
     
       }
       else

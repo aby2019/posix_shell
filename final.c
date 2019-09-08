@@ -9,6 +9,7 @@
 #include "pipe.h"
 #include "bash.h"
 #include "process.h"
+int count=1;	
 void clearScreen()
 {
   const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";//
@@ -17,7 +18,7 @@ void clearScreen()
 void history(char * str)
 {
 	 FILE *fp ;
-    static int count=1;
+     
     char arr[5];
     sprintf(arr, "%d", count);
     strcat(arr," ");
@@ -50,14 +51,40 @@ void command_exec(char **args)
 		    perror("\nerror\n"); 
         	 
     	} 	
-    	exit(0); 
+    	_exit(0); 
     }
 	else 
 	{  
 	        wait(NULL);  
 	        return ;
-	} 
+	}
+		
 } 
+void command_script(char **args)
+{
+	int pid =fork();
+		if(pid==0)
+		{
+			int fd;
+			char filename[1024] = "/home/abhinav/Desktop/script.txt";
+		 	if((fd = open(filename, O_APPEND|O_CREAT | O_WRONLY, 0644)) < 0)
+	  		{
+	        	perror("open error");
+	        	
+	      	}
+
+	      	dup2(fd, 1);
+	      	close(fd);
+	      	execvp(args[0],args);
+	      	perror("execvp error");
+	      	_exit(EXIT_FAILURE);    
+     	 }
+      	else 
+      		{
+      			wait(NULL);
+      		return;
+      		}
+}
 void show_history()
 {
 
@@ -80,6 +107,7 @@ void change_dir(char **args)
 
 int main() 
 {
+	 int record=0;
 	init();
 	while(1)
 	{
@@ -88,9 +116,9 @@ int main()
 		print_pwd();
 		int operation;// mode of io operation
 		int arg_count=0;//no of arguments in token
-		 int pipe_count;//
+		 int pipe_count;//no. of pipes
 	     int back_ground=0; 
-
+	    
 		char* args[1024];
 		ssize_t bufsize=1024;
 		char *inbuilt[1024]={"exit","cd","clear","history",NULL};
@@ -98,12 +126,9 @@ int main()
 			
 		char *str;
 		getline(&str,&bufsize,stdin);
-		
+	
 
-		
-
-
-		//tokenizing starts
+			//tokenizing starts
 		int tokens=0;
 		ptr= strtok(str, " \n");
 
@@ -193,6 +218,16 @@ int main()
 
 
 		}
+		if(!strcmp(args[0],"start")&&(!strcmp(args[1],"record")))
+		{
+			record=1;
+			continue;
+		}
+		if(!strcmp(args[0],"stop")&&(!strcmp(args[1],"record")))
+			{
+				record=0;
+				continue;
+			}
 
 		if((!strcmp(args[0],"echo"))&&(!strcmp(args[1],"$USER")))
 		{
@@ -283,15 +318,22 @@ int main()
 		}
 		else if(!strcmp(args[0],inbuilt[0]))
 		{
-			char *ex[3]={"rm","history.txt",NULL};
-			command_exec(ex);
+			// char *ex[3]={"rm","history.txt",NULL};
+			// command_exec(ex);
+			// count=1;
 			exit(0);
 		}
 		else if(back_ground)
      	command_exec_bg(args);
 		else
-		command_exec(args);
-		
+		{
+			command_exec(args);
+			if(record==1)
+			{
+				command_script(args);
+			}
+
+		}
 	}	
     return 0;
 }
