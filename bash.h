@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include<fcntl.h>
+#include <fcntl.h>
 
 extern char **environ;
 
@@ -15,6 +15,47 @@ char PS1[1024]="abhinav@abhinav-HP-Laptop-15q-ds0xxx:~$";
 char *opens[1024]={"vlc","libreoffice",NULL};
 int cap;//history size
 
+
+void set_env(char *str,char ** args)
+{
+	char temp[1024];
+	strcpy(temp,args[2]);
+	setenv(str,temp,1);
+}
+
+void create_bash()
+{
+	char temp[1024];
+	FILE *fp;
+	fp = fopen("/home/abhinav/Desktop/os_assignment1/bash.rc", "w") ;
+	if ( fp == NULL )
+    {
+        perror( "Could not open file history.txt\n" ) ;
+    
+    }
+    // for(int i=0;environ[i];i++)
+    // {
+    // 	fputs(environ[i],fp);
+    // 	fputs("\n",fp);
+    // }
+    sprintf(temp,"USER=%s",USER);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    sprintf(temp,"HOME=%s",HOME);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    sprintf(temp,"PATH=%s",PATH);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    sprintf(temp,"HOSTNAME=%s",USER);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    
+    sprintf(temp,"PS1=%s",PS1);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    fclose(fp);
+}
 void init()
 {
 
@@ -22,12 +63,7 @@ setenv("USER",USER,1);
 setenv("HOSTNAME",HOSTNAME,1);
 setenv("PATH",PATH,1);
 setenv("HOME",HOME,1);
-}
-void set_env(char *str,char ** args)
-{
-	char temp[1024];
-	strcpy(temp,args[2]);
-	setenv(str,temp,1);
+create_bash();
 }
 // void get_env(char **args)
 // {

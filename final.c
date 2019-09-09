@@ -62,7 +62,7 @@ void command_exec(char **args)
 } 
 void command_script(char **args)
 {
-	int pid =fork();
+		int pid =fork();
 		if(pid==0)
 		{
 			int fd;
@@ -81,8 +81,8 @@ void command_script(char **args)
      	 }
       	else 
       		{
-      			wait(NULL);
-      		return;
+	      		wait(NULL);
+	      		return;
       		}
 }
 void show_history()
@@ -108,7 +108,7 @@ void change_dir(char **args)
 int main() 
 {
 	 int record=0;
-	init();
+	 init();
 	while(1)
 	{
 
@@ -259,6 +259,7 @@ int main()
 				//change path in envirn
 				strcpy(USER,args[2]);
 				set_env("USER",args);
+				create_bash();
 
 			}
 			else if((!strcmp(args[0],"HOSTNAME"))&&(!strcmp(args[1],"="))&&(arg_count>=2))// no. of argument
@@ -266,6 +267,7 @@ int main()
 				//change path in envirn
 				strcpy(HOSTNAME,args[2]);
 				set_env("HOSTNAME",args);
+				create_bash();
 
 			}
 			else if((!strcmp(args[0],"PATH"))&&(!strcmp(args[1],"="))&&(arg_count>=2))//no. of argument
@@ -273,6 +275,7 @@ int main()
 				//change path in envirn
 				strcpy(PATH,args[2]);
 				set_env("PATH",args);
+				create_bash();
 
 			}
 			else if((!strcmp(args[0],"HOME"))&&(!strcmp(args[1],"="))&&(arg_count>=2))//no. of argument
@@ -280,12 +283,14 @@ int main()
 				//change path in envirn
 				strcpy(HOME,args[2]);
 				set_env("HOME",args);
+				create_bash();
 
 			}
 			else if((!strcmp(args[0],"PS1"))&&(!strcmp(args[1],"="))&&(arg_count>=2))//no. of argument
 			{
 				//change path in envirn	
 				strcpy(PS1,args[2]);
+				create_bash();
 
 			}
 			else if((!strcmp(args[0],"echo"))&&(!strcmp(args[1],"$$")))
@@ -318,9 +323,9 @@ int main()
 		}
 		else if(!strcmp(args[0],inbuilt[0]))
 		{
-			// char *ex[3]={"rm","history.txt",NULL};
-			// command_exec(ex);
-			// count=1;
+				// char *ex[3]={"rm","history.txt",NULL};
+				// command_exec(ex);
+				// count=1; 
 			exit(0);
 		}
 		else if(back_ground)
