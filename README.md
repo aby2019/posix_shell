@@ -20,10 +20,9 @@ background. It will be invoked as record start and record stop.
 commands executed ever. This can have a cap limit which can be
 configured via “.myrc” file in HISTSIZE variable. It will be
 invoked as history.
-13. TRIE data structure for tab completion support is needed. List of
+13. TRIE data structure for tab completion suppor. List of
 directories to be traversed on startup which are mentioned in
 PATH variable for populating all command names into the
 structure.
 14. Set default applications via .myrc file. This requires extension
-matching/mapping to your preferred application. Handle its I/O
-and parameter passing on executing.
+matching/mapping to your preferred application.
